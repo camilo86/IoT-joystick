@@ -2,9 +2,9 @@
   "name": "iot-joystick",
   "version": "1.0.0",
   "description": "Control all your iot devices using this silly joystick :)",
-  "main": "app.js",
+  "main": "joystick.js",
   "scripts": {
-    "test": "node app.js"
+    "test": "node joystick.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +21,10 @@
   "bugs": {
     "url": "https://github.com/camilo86/IoT-joystick/issues"
   },
-  "homepage": "https://github.com/camilo86/IoT-joystick#readme"
+  "homepage": "https://github.com/camilo86/IoT-joystick#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "morgan": "^1.7.0",
+    "path": "^0.12.7"
+  }
 }
