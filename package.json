@@ -2,9 +2,9 @@
   "name": "iot-joystick",
   "version": "1.0.0",
   "description": "Control all your iot devices using this silly joystick :)",
-  "main": "joystick.js",
+  "main": "app.js",
   "scripts": {
-    "test": "node joystick.js"
+    "test": "node app.js"
   },
   "repository": {
     "type": "git",
