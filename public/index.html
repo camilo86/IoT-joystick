@@ -1,0 +1,90 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+	<style>
+	body {
+		overflow	: hidden;
+		padding		: 0;
+		margin		: 0;
+		background-color: black;
+	}
+	#info {
+		position	: absolute;
+		top		: 0px;
+		width		: 100%;
+		padding		: 5px;
+		text-align	: center;
+	}
+	#info a {
+		color		: #66F;
+		text-decoration	: none;
+	}
+	#info a:hover {
+		text-decoration	: underline;
+	}
+	#container {
+		width		: 100%;
+		height		: 100%;
+		overflow	: hidden;
+		padding		: 0;
+		margin		: 0;
+		-webkit-user-select	: none;
+		-moz-user-select	: none;
+	}
+	</style>
+</head>
+<body>
+	<div id="container"></div>
+	<div id="info">
+		<span id="result" style="color:white;"></span>
+	</div>
+
+	<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+
+	<script src="/lib/VirtualJoystick.js"></script>
+	<script>
+	console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
+
+	// Initialize Firebase
+	var config = {
+		apiKey: "AIzaSyCbq5_PPHfXey-84bP-i8puzfAIPLieWl0",
+		authDomain: "iot-joystick.firebaseapp.com",
+		databaseURL: "https://iot-joystick.firebaseio.com",
+		storageBucket: "iot-joystick.appspot.com",
+	};
+	firebase.initializeApp(config);
+	var refX = firebase.database().ref().child("joystick_x");
+	var refY = firebase.database().ref().child("joystick_y");
+
+	var joystick	= new VirtualJoystick({
+		container	: document.getElementById('container'),
+		mouseSupport	: true,
+	});
+	joystick.addEventListener('touchStart', function(){
+		console.log('d!!own')
+	})
+	joystick.addEventListener('touchEnd', function(){
+		console.log('up')
+	})
+
+	setInterval(function() {
+		firebase.database().ref().child("joystick_x").set(joystick.deltaX());
+		firebase.database().ref().child("joystick_y").set(joystick.deltaY());
+	}, 1000/3);
+
+	setInterval(function(){
+		var outputEl	= document.getElementById('result');
+		outputEl.innerHTML	= '<b>Result:</b> '
+		+ ' dx:'+joystick.deltaX()
+		+ ' dy:'+joystick.deltaY()
+		+ (joystick.right()	? ' right'	: '')
+		+ (joystick.up()	? ' up'		: '')
+		+ (joystick.left()	? ' left'	: '')
+		+ (joystick.down()	? ' down' 	: '')
+	}, 1/30 * 1000);
+	</script>
+</body>
+</html>
